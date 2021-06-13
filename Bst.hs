@@ -33,17 +33,17 @@ insert' (Just head) val
     Node
       { value = value head,
         right = right head,
-        left = Just $ insert' (left head) val
+        left = pure $ insert' (left head) val
       }
   | otherwise =
     Node
       { value = value head,
-        right = Just $ insert' (right head) val,
+        right = pure $ insert' (right head) val,
         left = left head
       }
 
 insert :: Ord a => Node a -> a -> Node a
-insert head = insert' (Just head)
+insert = insert' . pure
 
 insertList :: Ord a => Node a -> [a] -> Node a
 insertList = foldl insert
@@ -51,7 +51,7 @@ insertList = foldl insert
 invert' :: Maybe (Node a) -> Maybe (Node a)
 invert' Nothing = Nothing
 invert' (Just head) =
-  Just $
+  pure $
     Node
       { value = value head,
         right = invert' (left head),
@@ -73,7 +73,7 @@ remove' Nothing _ = Nothing
 remove' (Just Node {value = val, right = r, left = l}) v
   | val == v = Nothing
   | otherwise =
-    Just $
+    pure $
       Node
         { value = val,
           right = remove' r v,
