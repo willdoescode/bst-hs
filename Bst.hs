@@ -1,4 +1,13 @@
-module Bst where
+module Bst
+  ( Node (..),
+    newList,
+    insert,
+    invert,
+    insertList,
+    height,
+    remove,
+  )
+where
 
 data Node a = Node
   { value :: a,
@@ -49,3 +58,12 @@ height' (Just Node {value = _, right = r, left = l}) = 1 + max (height' r) (heig
 
 height :: Node a -> Int
 height = height' . pure
+
+remove' :: Eq a => Maybe (Node a) -> a -> Maybe (Node a)
+remove' Nothing _ = Nothing
+remove' (Just Node {value = val, right = r, left = l}) v
+  | val == v = Nothing
+  | otherwise = Just $ Node {value = val, right = remove' r v, left = remove' l v}
+
+remove :: Eq a => Node a -> a -> Node a
+remove head v = unwrap $ remove' (pure head) v
