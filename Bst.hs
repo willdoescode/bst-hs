@@ -1,6 +1,6 @@
 module Bst
   ( Node (..),
-    newList,
+    newTree,
     insert,
     invert,
     insertList,
@@ -18,8 +18,8 @@ data Node a = Node
   }
   deriving (Show, Eq)
 
-newList :: a -> Node a
-newList x =
+newTree :: a -> Node a
+newTree x =
   Node
     { value = x,
       right = Nothing,
@@ -27,7 +27,7 @@ newList x =
     }
 
 insert' :: Ord a => Maybe (Node a) -> a -> Node a
-insert' Nothing x = newList x
+insert' Nothing x = newTree x
 insert' (Just head) val
   | value head > val =
     Node

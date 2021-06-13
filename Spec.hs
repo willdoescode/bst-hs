@@ -12,7 +12,7 @@ testInsert =
     assertEqual
       "BST Should insert correctly"
       testCaseAnswer
-      (insert (insert (insert (newList 5) 6) 7) 3)
+      (insert (insert (insert (newTree 5) 6) 7) 3)
 
 testInsertList :: Test
 testInsertList =
@@ -21,7 +21,7 @@ testInsertList =
       "BST Should insert list correctly"
       testCaseAnswer
       ( insertList
-          (newList 5)
+          (newTree 5)
           [6, 7, 3]
       )
 
@@ -33,7 +33,7 @@ testInvertTree =
       testInvertedAnswer
       ( invert $
           insertList
-            (newList 5)
+            (newTree 5)
             [6, 7, 3]
       )
 
@@ -43,7 +43,7 @@ testHeight =
     assertEqual
       "Height should be correct"
       3
-      (height $ insertList (newList 5) [6, 7, 3])
+      (height $ insertList (newTree 5) [6, 7, 3])
 
 testRemove :: Test
 testRemove =
@@ -51,7 +51,7 @@ testRemove =
     assertEqual
       "Removal from list should work"
       testRemoveAnswer
-      (remove (insertList (newList 5) [6, 7, 8, 9, 3]) 7)
+      (remove (insertList (newTree 5) [6, 7, 8, 9, 3]) 7)
 
 tests :: Test
 tests = TestList [testInsert, testInsertList, testInvertTree, testHeight, testRemove]
