@@ -1,5 +1,3 @@
-module Spec where
-
 import Bst
 import qualified Test.HUnit as T
 
@@ -26,8 +24,8 @@ testInsertList =
       )
       testCaseAnswer
 
-testInvertlist :: T.Test
-testInvertlist =
+testInvertTree :: T.Test
+testInvertTree =
   T.TestCase $
     T.assertEqual
       "BST Should invert"
@@ -45,3 +43,9 @@ testHeight =
       "Height should be correct"
       (height $ insertList (newList 5) [6, 7, 3])
       3
+
+tests :: T.Test
+tests = T.TestList [testInsert, testInsertList, testInvertTree, testHeight]
+
+main :: IO T.Counts
+main = T.runTestTT tests
