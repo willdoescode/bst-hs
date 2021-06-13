@@ -9,6 +9,8 @@ module Bst
   )
 where
 
+import Data.Maybe (fromJust)
+
 data Node a = Node
   { value :: a,
     right :: Maybe (Node a),
@@ -45,12 +47,8 @@ invert' :: Maybe (Node a) -> Maybe (Node a)
 invert' Nothing = Nothing
 invert' (Just head) = Just $ Node {value = value head, right = invert' (left head), left = invert' (right head)}
 
-unwrap :: Maybe (Node a) -> Node a
-unwrap (Just head) = head
-unwrap Nothing = error "handle error"
-
 invert :: Node a -> Node a
-invert = unwrap . invert' . pure
+invert = fromJust . invert' . pure
 
 height' :: Maybe (Node a) -> Int
 height' Nothing = 0
@@ -66,4 +64,4 @@ remove' (Just Node {value = val, right = r, left = l}) v
   | otherwise = Just $ Node {value = val, right = remove' r v, left = remove' l v}
 
 remove :: Eq a => Node a -> a -> Node a
-remove head v = unwrap $ remove' (pure head) v
+remove head v = fromJust $ remove' (pure head) v
